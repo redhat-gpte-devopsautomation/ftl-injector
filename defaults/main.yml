@@ -13,4 +13,7 @@ ftl_git_repo: https://github.com/redhat-gpte-devopsautomation/FTL.git
 # Local destination directory on grading host
 
 ftl_grading_host_home: /opt/ftl-repo-clone
+
+virtual_env_home: /opt/virtualenvs
+virtual_env_name: venv-grading
 ...
