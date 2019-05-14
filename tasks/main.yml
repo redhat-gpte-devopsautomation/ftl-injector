@@ -2,12 +2,12 @@
   # Setup the FTL virtualenv on grader host
 - include_tasks: setup-virtualenv.yml
 
-  # Setup the FTL git repo on grader host
+  # Insert the FTL git repo on grader host
 - include_tasks: insert-ftl-repo.yml
 
   # Create local facts from student and course metadata
-- include_tasks: local-facts.yml
+- include_tasks: create-local-facts.yml
 
-  # Setup the wrapper scripts called by students
+  # Insert the wrapper scripts called by students
 - include_tasks: insert-wrapper-scripts.yml
 ...
