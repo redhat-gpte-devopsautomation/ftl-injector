@@ -1,6 +1,6 @@
 ---
-  # Setup the FTL virtualenv on grader host
-- include_tasks: setup-virtualenv.yml
+  # Create the FTL virtualenv on grader host
+- include_tasks: create-virtualenv.yml
 
   # Insert the FTL git repo on grader host
 - include_tasks: insert-ftl-repo.yml

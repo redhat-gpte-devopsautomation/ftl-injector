@@ -1,7 +1,7 @@
 ---
 - name: Setup pre-requisite python packages
-  yum:
-    name: "{{ python_dependencies }}"
+  package:
+    name: "{{ yum_dependencies }}"
     state: present
 
 - name: Setup pre-requisite pip packages
