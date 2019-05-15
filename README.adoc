@@ -51,11 +51,14 @@ export OPENTLC_STUDENT=${USER:-unknown-student}                   <1>
 +
 * *1* Assign the CloudForms `--user` argument to an *ENV VAR*
 * *2* Use *1* to pass to `ansible` via `-e`
+
 NOTE: Failing to do this will *NOT* result in failure as `student_login` defaults to `john-doe` in the the roles `defaults/main.yml`.
 
 === Notes
 
 Adding, or updating, the `ftl-injector` role to your project:
+
+NOTE: Not required for `agnosticd` as this role is baked in.
 
 . Create a requirements.yml, with the correct version tag:
 +
