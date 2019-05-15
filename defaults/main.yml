@@ -19,5 +19,5 @@ virtual_env_name: venv-grading
 
 # Local fact data, expect to pass in via deployer script etc.
 
-opentlc_student: john-doe
+student_login: john-doe
 ...
