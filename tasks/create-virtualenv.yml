@@ -19,4 +19,10 @@
     requirements: /tmp/requirements.txt
     virtualenv: "{{ virtual_env_home }}/{{ virtual_env_name }}"
     virtualenv_site_packages: no
+
+- name: Setup selinux bindings within virtualenv to allow report writing
+  file:
+    src: /usr/lib64/python2.7/site-packages/selinux/
+    dest: "{{ virtual_env_home }}/{{ virtual_env_name }}/lib/python2.7/site-packages/selinux"
+    state: link
 ...
