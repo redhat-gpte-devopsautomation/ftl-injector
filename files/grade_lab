@@ -38,7 +38,7 @@ fi
 
 # Activate a protected vurtualenv with all dependencies and it's own ansible
 
-echo "Starting $0 Process"
+echo "Starting ${PURPOSE} Process"
 
 source ${VIRTUALENV}/bin/activate
 
@@ -47,6 +47,12 @@ source ${VIRTUALENV}/bin/activate
   -e course_name=${COURSE_NAME}                           \
   -e purpose=${PURPOSE}                                   \
   -e lab_number=${LAB_NUMBER} > ${LOG_FILE} 2>&1 )
+
+if [ $? -ne 0 ]
+then
+  echo ${PURPOSE} ERROR: Failed to run sucessfully
+  echo "Grading Log (ansible): ${LOG_FILE}"
+fi
 
 # Output the error report
 
@@ -60,4 +66,12 @@ then
   echo
   echo "Grading Report:        ${GRADE_REPORT}"
   echo "Grading Log (ansible): ${LOG_FILE}"
+fi 
+if [ ${PURPOSE} == "solve_lab" ] 
+then  
+  echo "Solver has completed lab"
+fi 
+if [ ${PURPOSE} == "reset_lab" ] 
+then  
+  echo "Lab has been reset to starting point"
 fi 
