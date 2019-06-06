@@ -58,8 +58,6 @@ NOTE: Failing to do this will *NOT* result in failure as `student_login` default
 
 Adding, or updating, the `ftl-injector` role to your project:
 
-NOTE: Not required for `agnosticd` as this role is baked in.
-
 . Create a requirements.yml, with the correct version tag:
 +
 [source,yaml]
