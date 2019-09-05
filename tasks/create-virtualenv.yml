@@ -1,10 +1,12 @@
 ---
 - name: Setup pre-requisite python packages
+  when: install_dependencies | bool
   package:
     name: "{{ yum_dependencies }}"
     state: present
 
 - name: Setup pre-requisite pip packages
+  when: install_dependencies | bool
   pip:
     name: "{{ pip_dependencies }}"
     state: present
