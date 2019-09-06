@@ -1,4 +1,6 @@
 ---
+install_dependencies: True
+
 yum_dependencies:
     - git
     - python-pip
