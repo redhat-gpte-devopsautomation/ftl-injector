@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-if [ $# -ne 2 ];
+if [ $# -ne 3 ];
 then  
-  echo "Usage: $0 course-name lab-number"
+  echo "Usage: $0 course-name lab-number student-id"
   echo
   echo "lab-number in format 03_01"
   exit 1
@@ -11,6 +11,7 @@ fi
 PURPOSE=$(basename $0)
 COURSE_NAME=$1
 LAB_NUMBER=$2
+STUDENT_ID=$3
 
 # wrapper script for grading playbook for lab
 
@@ -52,7 +53,8 @@ source ${VIRTUALENV}/bin/activate
   -e @vars/global_vars.yml                                \
   -e course_name=${COURSE_NAME}                           \
   -e purpose=${PURPOSE}                                   \
-  -e lab_number=${LAB_NUMBER} > ${LOG_FILE} 2>&1 )
+  -e lab_number=${LAB_NUMBER}                             \
+  -e student_id=${STUDENT_ID}    > ${LOG_FILE} 2>&1 )
 
 if [ $? -ne 0 ]
 then
