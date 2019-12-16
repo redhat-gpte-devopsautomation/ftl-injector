@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
+PURPOSE=$(basename $0)
+
 if [ $# -ne 3 ];
 then  
-  echo "Usage: $0 course-name lab-number student-id"
+  echo "Usage: ${PURPOSE} course-name lab-number student-id"
   echo
   echo "lab-number in format 03_01"
   exit 1
 fi  
 
-PURPOSE=$(basename $0)
 COURSE_NAME=$1
 LAB_NUMBER=$2
 STUDENT_ID=$3
