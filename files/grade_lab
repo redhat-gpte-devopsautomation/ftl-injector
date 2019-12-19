@@ -51,7 +51,9 @@ echo "Starting ${PURPOSE} Process"
 source ${VIRTUALENV}/bin/activate
 
 ( cd ${FTL_REPO_HOME};  ansible-playbook main.yml         \
+  --vault-password-file=vars/.vault                       \
   -e @vars/global_vars.yml                                \
+  -e @courses/${COURSE_NAME}course_vars.yml               \
   -e course_name=${COURSE_NAME}                           \
   -e purpose=${PURPOSE}                                   \
   -e lab_number=${LAB_NUMBER}                             \
