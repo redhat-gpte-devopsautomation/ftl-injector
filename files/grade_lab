@@ -25,14 +25,25 @@ then
     FTL_REPO_HOME=/opt/ftl-repo-clone/
 fi
 
-GRADE_REPORT=/tmp/grading_report.txt
+export ERROR_REPORT=/tmp/opentlc_grader.log
+export GRADE_REPORT=/tmp/grading_report.txt
 export LOG_FILE=/tmp/opentlc_ansible.log
 
 # Clean up - next bit is a job for ansible
 
 if [ -f ${GRADE_REPORT} ]; 
 then
-  cp  ${GRADE_REPORT} ${GRADE_REPORT}-previous
+  mv  ${GRADE_REPORT} ${GRADE_REPORT}-previous
+fi
+
+if [ -f ${LOG_FILE} ]; 
+then
+  mv  ${LOG_FILE} ${LOG_FILE}-previous
+fi
+
+if [ -f ${ERROR_REPORT} ]; 
+then
+  mv  ${ERROR_REPORT} ${ERROR_REPORT}-previous
 fi
 
 # Make sure ansible finds the correct roles if it loads a new ansible.cfg
@@ -44,11 +55,18 @@ if [ -f $FILE ]; then
    export ANSIBLE_CONFIG=${FILE}
 fi
 
-# Activate a protected vurtualenv with all dependencies and it's own ansible
+# Activate a protected virtualenv with all dependencies and it's own ansible
 
 echo "Starting ${PURPOSE} Process"
+echo
 
 source ${VIRTUALENV}/bin/activate
+
+# Setup Tower exports
+
+export TOWER_HOST=https://tower.ftl-tower-test.na.shared.opentlc.com
+export TOWER_TOKEN=GcuQunIoPr7XGCvGy6lCCpFCygBPgw
+export TOWER_VERIFY_SSL=false
 
 ( cd ${FTL_REPO_HOME};  ansible-playbook main.yml         \
   --vault-password-file=vars/.vault                       \
@@ -58,6 +76,7 @@ source ${VIRTUALENV}/bin/activate
   -e course_id=${COURSE_NAME}                             \
   -e purpose=${PURPOSE}                                   \
   -e lab_number=${LAB_NUMBER}                             \
+  -e lab_id=${LAB_NUMBER}                                 \
   -e student_id=${STUDENT_ID}    > ${LOG_FILE} 2>&1 )
 
 if [ $? -ne 0 ]
@@ -68,8 +87,6 @@ fi
 
 # Output the error report
 
-echo "Finished ${PURPOSE} Process"
-echo
 
 if [ ${PURPOSE} == "grade_lab" ] 
 then  
@@ -79,6 +96,7 @@ then
   echo "Grading Report:        ${GRADE_REPORT}"
   echo "Grading Log (ansible): ${LOG_FILE}"
 fi 
+
 if [ ${PURPOSE} == "solve_lab" ] 
 then  
   echo "Solver has completed lab"
@@ -87,3 +105,6 @@ if [ ${PURPOSE} == "reset_lab" ]
 then  
   echo "Lab has been reset to starting point"
 fi 
+
+echo "Finished ${PURPOSE} Process"
+echo

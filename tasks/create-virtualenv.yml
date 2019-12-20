@@ -1,4 +1,20 @@
 ---
+#- name: Setup yum repos
+#  yum_repository:
+#    name:         "{{ repo.name }}"
+#    description:  "{{ repo.description }}"
+#    baseurl:      "{{ repo.baseurl }}"
+#    enabled:      "{{ repo.enabled | default(true) }}"
+#    state:        "{{ repo.state | default('present') }}"
+#  loop: "{{ yum_repos }}"
+#  loop_control:
+#    loop_var: repo
+
+- name: Setup awx cli repo bug in task above
+  shell: >
+    yum-config-manager 
+    --add-repo https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-el7.repo
+
 - name: Setup pre-requisite python packages
   when: install_dependencies | bool
   package:
