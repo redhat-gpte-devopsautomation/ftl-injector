@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Don't run as root user
+if [ $UID -eq 0 ];
+then
+  echo "Do not run as root, exiting..."
+  exit 1
+fi
+
 PURPOSE=$(basename $0)
 
 if [ $# -ne 3 ];
@@ -25,7 +32,8 @@ then
     FTL_REPO_HOME=/opt/ftl-repo-clone/
 fi
 
-export ERROR_REPORT=/tmp/opentlc_grader.log
+export ERROR_REPORT=/tmp/opentlc_error.log
+export SUCCESS_REPORT=/tmp/opentlc_success.log
 export GRADE_REPORT=/tmp/grading_report.txt
 export LOG_FILE=/tmp/opentlc_ansible.log
 
@@ -34,6 +42,11 @@ export LOG_FILE=/tmp/opentlc_ansible.log
 if [ -f ${GRADE_REPORT} ]; 
 then
   mv  ${GRADE_REPORT} ${GRADE_REPORT}-previous
+fi
+
+if [ -f ${SUCCESS_REPORT} ]; 
+then
+  mv  ${SUCCESS_REPORT} ${SUCCESS_REPORT}-previous
 fi
 
 if [ -f ${LOG_FILE} ]; 
