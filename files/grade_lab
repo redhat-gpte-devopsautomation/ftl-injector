@@ -36,12 +36,18 @@ export ERROR_REPORT=/tmp/opentlc_error.log
 export SUCCESS_REPORT=/tmp/opentlc_success.log
 export GRADE_REPORT=/tmp/grading_report.txt
 export LOG_FILE=/tmp/opentlc_ansible.log
+export GRADER_LOG=/tmp/opentlc_grader.log
 
 # Clean up - next bit is a job for ansible
 
 if [ -f ${GRADE_REPORT} ]; 
 then
   mv  ${GRADE_REPORT} ${GRADE_REPORT}-previous
+fi
+
+if [ -f ${GRADER_LOG} ]; 
+then
+  mv  ${GRADER_LOG} ${GRADER_LOG}-previous
 fi
 
 if [ -f ${SUCCESS_REPORT} ]; 
