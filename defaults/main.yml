@@ -22,6 +22,7 @@ yum_dependencies:
 pip_dependencies:
   - virtualenv
   - ansible-tower-cli
+  - jq  
 
 # Git repo for FTL repo
 

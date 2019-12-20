@@ -87,7 +87,6 @@ fi
 
 # Output the error report
 
-
 if [ ${PURPOSE} == "grade_lab" ] 
 then  
   cat ${GRADE_REPORT}
@@ -106,5 +105,6 @@ then
   echo "Lab has been reset to starting point"
 fi 
 
+echo
 echo "Finished ${PURPOSE} Process"
 echo
