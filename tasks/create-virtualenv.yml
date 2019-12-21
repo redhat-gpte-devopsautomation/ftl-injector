@@ -10,6 +10,11 @@
 #  loop_control:
 #    loop_var: repo
 
+- name: Setup pre-requisite yum-utils esp for centos
+  when: install_dependencies | bool
+  package:
+    name: yum-utils
+
 - name: Setup awx cli repo bug in task above
   shell: >
     yum-config-manager 
