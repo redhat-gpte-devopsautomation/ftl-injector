@@ -62,9 +62,9 @@ source ${VIRTUALENV}/bin/activate
 
 # Setup Tower exports
 
-#export TOWER_HOST=https://tower.ftl-tower-test.na.shared.opentlc.com
-#export TOWER_TOKEN=GcuQunIoPr7XGCvGy6lCCpFCygBPgw
-#export TOWER_VERIFY_SSL=false
+export TOWER_HOST=https://tower.ftl-tower-test.na.shared.opentlc.com
+export TOWER_TOKEN=GcuQunIoPr7XGCvGy6lCCpFCygBPgw
+export TOWER_VERIFY_SSL=false
 
 ( cd ${FTL_REPO_HOME};  ansible-playbook main.yml         \
   --vault-password-file=vars/.vault                       \
