@@ -34,7 +34,7 @@ then
 fi
 
 export GRADER_REPORT=/tmp/grading_dir/grading_report.txt
-export LOG_FILE=/tmp/grading_dir/ansible_grading.log
+export LOG_FILE=/tmp/ansible_grading.log
 
 # Clean up - next bit is a job for ansible
 
@@ -62,17 +62,17 @@ source ${VIRTUALENV}/bin/activate
 
 # Setup Tower exports
 
-export TOWER_HOST=https://tower.ftl-tower-test.na.shared.opentlc.com
-export TOWER_TOKEN=GcuQunIoPr7XGCvGy6lCCpFCygBPgw
-export TOWER_VERIFY_SSL=false
+#export TOWER_HOST=https://tower.ftl-tower-test.na.shared.opentlc.com
+#export TOWER_TOKEN=GcuQunIoPr7XGCvGy6lCCpFCygBPgw
+#export TOWER_VERIFY_SSL=false
 
 ( cd ${FTL_REPO_HOME};  ansible-playbook main.yml         \
   --vault-password-file=vars/.vault                       \
   -e @vars/global_vars.yml                                \
-  -e @courses/${COURSE_ID}/course_vars.yml              \
+  -e @courses/${COURSE_ID}/course_vars.yml                \
   -e purpose=${PURPOSE}                                   \
-  -e course_id=${COURSE_ID}                             \
-  -e lab_id=${LAB_ID}                                 \
+  -e course_id=${COURSE_ID}                               \
+  -e lab_id=${LAB_ID}                                     \
   -e student_id=${STUDENT_ID}    > ${LOG_FILE} 2>&1 )
 
 if [ $? -ne 0 ]
