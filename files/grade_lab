@@ -38,10 +38,10 @@ export LOG_FILE=/tmp/ansible_grading.log
 
 # Clean up - next bit is a job for ansible
 
-if [ -f ${LOG_FILE} ]; 
-then
-  mv  ${LOG_FILE} ${LOG_FILE}-previous
-fi
+#if [ -f ${LOG_FILE} ]; 
+#then
+#  mv  ${LOG_FILE} ${LOG_FILE}-previous
+#fi
 
 
 # Make sure ansible finds the correct roles if it loads a new ansible.cfg
