@@ -21,6 +21,8 @@ COURSE_ID=$1
 LAB_ID=$2
 STUDENT_ID=$3
 
+umask 0000 # Allow multiple users to over-write logs
+
 # wrapper script for grading playbook for lab
 
 VIRTUALENV=/opt/virtualenvs/venv-grading
