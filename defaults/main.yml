@@ -5,6 +5,10 @@ yum_dependencies:
     - git
     - python-pip
 
+yum_dependencies_python3:
+    - git
+    - python3-pip
+
 pip_dependencies:
     - virtualenv
 

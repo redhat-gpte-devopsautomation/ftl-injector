@@ -1,9 +1,18 @@
 ---
 - name: Setup pre-requisite python packages
   when: install_dependencies | bool
-  package:
-    name: "{{ yum_dependencies }}"
-    state: present
+  block:
+    - name: For python2
+      package:
+        name: "{{ yum_dependencies }}"
+        state: present
+      when: not use_python3
+
+    - name: For python3
+      package:
+        name: "{{ yum_dependencies_python3 }}"
+        state: present
+      when: use_python3
 
 - name: Setup pre-requisite pip packages
   when: install_dependencies | bool
