@@ -1,58 +1,55 @@
 ---
-- name: Setup pre-requisite python2 packages
-  when: 
+- name: Set up for python2
+  when:
     - install_dependencies | bool
     - not use_python3 | bool
-  package:
-    name: "{{ yum_dependencies }}"
-    state: present
+  block:
+    - name: Setup pre-requisite python2 packages
+      package:
+        name: "{{ yum_dependencies }}"
+        state: present
 
-- name: Setup pre-requisite python3 packages
-  when: 
-    - install_dependencies | bool
-    - use_python3 | bool
-  package:
-    name: "{{ yum_dependencies_python3 }}"
-    state: present
+    - name: Setup pre-requisite pip packages
+      pip:
+        name: "{{ pip_dependencies }}"
+        state: present
 
-- name: Setup pre-requisite pip packages
-  when: 
-    - install_dependencies | bool
-    - not use_python3 | bool
-  pip:
-    name: "{{ pip_dependencies }}"
-    state: present
+    - name: Copy requirements.txt to target for FTL virtualenv
+      copy:
+        src: requirements.txt
+        dest: /tmp/requirements.txt
 
-- name: Setup pre-requisite pip3 packages
-  when: 
-    - install_dependencies | bool
-    - use_python3 | bool
-  pip:
-    name: "{{ pip_dependencies }}"
-    state: present
-    executable: /usr/bin/pip3
+    - name: "Create virtualenv {{ virtual_env_name }} for FTL"
+      pip:
+        requirements: /tmp/requirements.txt
+        virtualenv: "{{ virtual_env_home }}/{{ virtual_env_name }}"
+        virtualenv_site_packages: no
 
-- name: Copy requirements.txt to target for FTL virtualenv
-  copy:
-    src: requirements.txt
-    dest: /tmp/requirements.txt
-
-- name: "Create virtualenv {{ virtual_env_name }} for FTL"
-  when: 
-    - install_dependencies | bool
-    - not use_python3 | bool
-  pip:
-    requirements: /tmp/requirements.txt
-    virtualenv: "{{ virtual_env_home }}/{{ virtual_env_name }}"
-    virtualenv_site_packages: no
-
-- name: "Create virtualenv {{ virtual_env_name }} for FTL"
+- name: Set up for python3
   when:
     - install_dependencies | bool
     - use_python3 | bool
-  pip:
-    requirements: /tmp/requirements.txt
-    virtualenv: "{{ virtual_env_home }}/{{ virtual_env_name }}"
-    virtualenv_site_packages: no
-    virtualenv_command: /usr/local/bin/virtualenv
+  block:
+    - name: Setup pre-requisite python3 packages
+      package:
+        name: "{{ yum_dependencies_python3 }}"
+        state: present
+
+    - name: Setup pre-requisite pip3 packages
+      pip:
+        name: "{{ pip_dependencies }}"
+        state: present
+        executable: /usr/bin/pip3
+
+    - name: Copy requirements.txt to target for FTL virtualenv
+      copy:
+        src: requirements.txt
+        dest: /tmp/requirements.txt
+
+    - name: "Create virtualenv {{ virtual_env_name }} for FTL"
+      pip:
+        requirements: /tmp/requirements.txt
+        virtualenv: "{{ virtual_env_home }}/{{ virtual_env_name }}"
+        virtualenv_site_packages: no
+        virtualenv_command: /usr/local/bin/virtualenv
 ...
