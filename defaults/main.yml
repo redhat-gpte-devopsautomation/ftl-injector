@@ -1,17 +1,37 @@
 ---
 install_dependencies: True
 
+yum_repos:
+  - name: ansible-tower-cli-el7
+    baseurl: https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-el7
+    description: Ansible Tower CLI
+    enabled: yes
+    state: present
+
 yum_dependencies:
-    - git
-    - python-pip
+  - ansible-tower-cli
+  - autoconf
+  - automake 
+  - git
+  - libtool 
+  - python
+  - python-devel  
+  - python-pip
+
 
 yum_dependencies_python3:
     - git
     - python3-pip
 
 pip_dependencies:
+<<<<<<< HEAD
     - virtualenv
     - ansible-tower-cli
+=======
+  - virtualenv
+  - ansible-tower-cli
+  - jq  
+>>>>>>> refactor-logging-2019-12-21
 
 # Git repo for FTL repo
 

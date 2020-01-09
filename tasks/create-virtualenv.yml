@@ -1,4 +1,17 @@
 ---
+- name: Setup for Ansible Tower CLI awx utility
+  block:
+
+    - name: Setup pre-requisite yum-utils esp for centos
+      when: install_dependencies | bool
+      package:
+        name: yum-utils
+
+    - name: Setup awx cli repo bug in task above
+      shell: >
+        yum-config-manager 
+        --add-repo https://releases.ansible.com/ansible-tower/cli/ansible-tower-cli-el7.repo
+
 - name: Set up for python2
   when:
     - install_dependencies | bool
