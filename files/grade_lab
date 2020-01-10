@@ -9,8 +9,18 @@ fi
 
 PURPOSE=$(basename $0)
 
-if [ $# -ne 3 ];
+if [[ ${PURPOSE} != "grade_lab" ]] && [[ $# -ne 2 ]];
 then  
+  STUDENT_ID="anon"
+  echo "Usage: ${PURPOSE} course-name lab-number"
+  echo
+  echo "lab-number in format 03_01"
+  exit 1
+fi  
+
+if [[ ${PURPOSE} == "grade_lab" ]] && [[ $# -ne 3 ]];
+then
+  STUDENT_ID=$3
   echo "Usage: ${PURPOSE} course-name lab-number student-id"
   echo
   echo "lab-number in format 03_01"
@@ -19,7 +29,6 @@ fi
 
 COURSE_ID=$1
 LAB_ID=$2
-STUDENT_ID=$3
 
 umask 0000 # Allow multiple users to over-write logs
 
@@ -98,6 +107,7 @@ if [ ${PURPOSE} == "solve_lab" ]
 then  
   echo "Solver has completed lab"
 fi 
+
 if [ ${PURPOSE} == "reset_lab" ] 
 then  
   echo "Lab has been reset to starting point"
