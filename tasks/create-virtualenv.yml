@@ -1,4 +1,12 @@
 ---
+- name: Install jq
+  get_url:
+    url: https://gpte-public.s3.amazonaws.com/jq-linux64
+    dest: /usr/bin/jq
+    mode: 0775
+    owner: root
+    group: root
+
 - name: Setup for Ansible Tower CLI awx utility
   block:
 
