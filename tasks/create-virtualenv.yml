@@ -37,7 +37,7 @@
 
     - name: Copy requirements.txt to target for FTL virtualenv
       copy:
-        src: requirements.txt
+        src: requirements_python2.txt
         dest: /tmp/requirements.txt
 
     - name: "Create virtualenv {{ virtual_env_name }} for FTL"
@@ -64,7 +64,7 @@
 
     - name: Copy requirements.txt to target for FTL virtualenv
       copy:
-        src: requirements.txt
+        src: requirements_python3.txt
         dest: /tmp/requirements.txt
 
     - name: "Create virtualenv {{ virtual_env_name }} for FTL"
