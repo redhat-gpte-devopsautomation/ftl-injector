@@ -11,7 +11,6 @@ PURPOSE=$(basename $0)
 
 if [[ ${PURPOSE} != "grade_lab" ]] && [[ $# -ne 2 ]];
 then  
-  STUDENT_ID="anon"
   echo "Usage: ${PURPOSE} course-name lab-number"
   echo
   echo "lab-number in format 03_01"
@@ -20,7 +19,6 @@ fi
 
 if [[ ${PURPOSE} == "grade_lab" ]] && [[ $# -ne 3 ]];
 then
-  STUDENT_ID=$3
   echo "Usage: ${PURPOSE} course-name lab-number student-id"
   echo
   echo "lab-number in format 03_01"
@@ -29,6 +27,11 @@ fi
 
 COURSE_ID=$1
 LAB_ID=$2
+
+if [[ $# -eq 3 ]];
+then
+  STUDENT_ID=$3
+fi
 
 umask 0000 # Allow multiple users to over-write logs
 
