@@ -5,7 +5,7 @@ cachetools==4.1.1
 certifi==2020.11.8
 cffi==1.14.4
 chardet==3.0.4
-cryptography==3.2.1
+cryptography==3.3.2
 distro==1.5.0
 google-auth==1.23.0
 idna==2.10
