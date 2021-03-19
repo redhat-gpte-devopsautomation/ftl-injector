@@ -38,5 +38,5 @@ ruamel.yaml==0.16.12
 ruamel.yaml.clib==0.2.2
 selinux==0.2.1
 six==1.15.0
-urllib3==1.26.2
+urllib3==1.26.3
 websocket-client==0.57.0
