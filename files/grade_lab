@@ -10,12 +10,12 @@ fi
 PURPOSE=$(basename $0)
 
 if [[ ${PURPOSE} != "grade_lab" ]] && [[ $# -ne 2 ]];
-then  
+then
   echo "Usage: ${PURPOSE} course-name lab-number"
   echo
-  echo "lab-number in format 03_01"
+  echo "lab-number in format 03_1"
   exit 1
-fi  
+fi
 
 if [[ ${PURPOSE} == "grade_lab" ]] && [[ $# -ne 3 ]];
 then
@@ -23,7 +23,22 @@ then
   echo
   echo "lab-number in format 03_01"
   exit 1
-fi  
+fi
+
+if [[ ${PURPOSE} == "grade_lab" ]];
+then
+  GERUND='grading'
+fi
+
+if [[ ${PURPOSE} == "solve_lab" ]];
+then
+  GERUND='solving'
+fi
+
+if [[ ${PURPOSE} == "reset_lab" ]];
+then
+  GERUND='resetting'
+fi
 
 COURSE_ID=$1
 LAB_ID=$2
@@ -37,6 +52,7 @@ umask 0000 # Allow multiple users to over-write logs
 
 # wrapper script for grading playbook for lab
 
+# VIRTUALENV=/opt/virtualenvs/venv-${GERUND}
 VIRTUALENV=/opt/virtualenvs/venv-grading
 
 # You can set the FTL_REPO_HOME var in your environment to point
@@ -48,15 +64,14 @@ then
 fi
 
 export GRADER_REPORT=/tmp/grading_dir/grading_report.txt
-export LOG_FILE=/tmp/ansible_grading.log
+export LOG_FILE=/tmp/ansible_${GERUND}.log
 
 # Clean up - next bit is a job for ansible
 
-#if [ -f ${LOG_FILE} ]; 
+#if [ -f ${LOG_FILE} ];
 #then
 #  mv  ${LOG_FILE} ${LOG_FILE}-previous
 #fi
-
 
 # Make sure ansible finds the correct roles if it loads a new ansible.cfg
 
@@ -92,29 +107,31 @@ export TOWER_VERIFY_SSL=false
 if [ $? -ne 0 ]
 then
   echo ${PURPOSE} ERROR: Failed to run sucessfully
-  echo "Grading Log (ansible): ${LOG_FILE}"
+  echo "${GERUND} Log (ansible): ${LOG_FILE}"
 fi
 
 # Output the error report
 
-if [ ${PURPOSE} == "grade_lab" ] 
-then  
+if [ ${PURPOSE} == "grade_lab" ]
+then
   cat ${GRADER_REPORT}
 
   echo
   echo "Grading Report:        ${GRADER_REPORT}"
   echo "Grading Log (ansible): ${LOG_FILE}"
-fi 
+fi
 
-if [ ${PURPOSE} == "solve_lab" ] 
-then  
+if [ ${PURPOSE} == "solve_lab" ]
+then
   echo "Solver has completed lab"
-fi 
+  echo "Find the log of activity in: ${LOG_FILE}"
+fi
 
-if [ ${PURPOSE} == "reset_lab" ] 
-then  
+if [ ${PURPOSE} == "reset_lab" ]
+then
   echo "Lab has been reset to starting point"
-fi 
+  echo "Find the log of activity in: ${LOG_FILE}"
+fi
 
 echo
 echo "Finished ${PURPOSE} Process"
