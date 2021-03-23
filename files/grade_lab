@@ -86,6 +86,11 @@ fi
 
 echo "Starting ${PURPOSE} Process"
 echo
+if [[ ${PURPOSE}} != "grade_lab" ]];
+then
+  echo "Find logs in ${LOG_FILE}"
+  echo
+fi
 
 source ${VIRTUALENV}/bin/activate
 
