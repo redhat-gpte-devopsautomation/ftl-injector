@@ -1,0 +1,5 @@
+---
+collections:
+  - name: git+https://github.com/juliaaano/redhat-gpe-collections.git#/ansible/redhat_gpe/
+    type: git
+    version: master

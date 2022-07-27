@@ -100,13 +100,21 @@ export TOWER_HOST=https://tower.ftl-tower-test.na.shared.opentlc.com
 export TOWER_TOKEN=GcuQunIoPr7XGCvGy6lCCpFCygBPgw
 export TOWER_VERIFY_SSL=false
 
-( cd ${FTL_REPO_HOME};  ansible-playbook main.yml         \
+# wip for testing
+PLAYBOOK=main.yml
+if [[ ${COURSE_ID} == "ocp4_advanced_application_deployment" ]];
+then
+  PLAYBOOK=solve_lab.yml
+fi
+
+( cd ${FTL_REPO_HOME};  ansible-playbook $PLAYBOOK        \
   --vault-password-file=vars/.vault                       \
   -e @vars/global_vars.yml                                \
   -e @courses/${COURSE_ID}/course_vars.yml                \
   -e purpose=${PURPOSE}                                   \
   -e course_id=${COURSE_ID}                               \
   -e lab_id=${LAB_ID}                                     \
+  --tags=${LAB_ID}                                        \
   -e student_id=${STUDENT_ID}    > ${LOG_FILE} 2>&1 )
 
 if [ $? -ne 0 ]

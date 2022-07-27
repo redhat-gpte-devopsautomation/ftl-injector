@@ -14,4 +14,6 @@
   
   # Insert the wrapper scripts called by students
   - include_tasks: insert-wrapper-scripts.yml
+
+  - include_tasks: install-ansible-collections.yml
 ...

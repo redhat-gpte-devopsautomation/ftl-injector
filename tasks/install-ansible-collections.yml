@@ -1,0 +1,15 @@
+---
+- name: copy requirements-collections.yml
+  ansible.builtin.copy:
+    src: requirements-collections.yml
+    dest: /tmp/requirements-collections.yml
+
+- name: ansible-galaxy collection install requirements-collections.yml
+  vars:
+    # collections_path: "{{ lookup('config', 'COLLECTIONS_PATHS')[0] }}"
+    # collections_path: /home/lab-user/.ansible/collections
+    collections_path: /usr/share/ansible/collections
+  command: >-
+    {{ virtual_env_home }}/{{ virtual_env_name }}/bin/ansible-galaxy collection install
+    --requirements-file /tmp/requirements-collections.yml
+    --collections-path "{{ collections_path | quote }}"
