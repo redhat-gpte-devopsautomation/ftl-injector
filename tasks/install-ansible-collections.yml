@@ -1,0 +1,11 @@
+---
+- name: copy requirements-collections.yml
+  ansible.builtin.copy:
+    src: requirements-collections.yml
+    dest: /tmp/requirements-collections.yml
+
+- name: ansible-galaxy colleciton install requirements.yml
+  ansible.builtin.shell: >-
+    ansible-galaxy collection install
+    --requirements-file /tmp/requirements-collections.yml
+    --collections-path {{ virtual_env_home }}/{{ virtual_env_name }}/lib/python3.6/site-packages/ansible_collections
