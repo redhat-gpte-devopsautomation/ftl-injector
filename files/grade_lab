@@ -25,23 +25,26 @@ then
   exit 1
 fi
 
+COURSE_ID=$1
+LAB_ID=$2
+
 if [[ ${PURPOSE} == "grade_lab" ]];
 then
   GERUND='grading'
+  ACTION=grade_lab_${LAB_ID}
 fi
 
 if [[ ${PURPOSE} == "solve_lab" ]];
 then
   GERUND='solving'
+  ACTION=solve_lab_${LAB_ID}
 fi
 
 if [[ ${PURPOSE} == "reset_lab" ]];
 then
   GERUND='resetting'
+  ACTION=reset_lab_${LAB_ID}
 fi
-
-COURSE_ID=$1
-LAB_ID=$2
 
 if [[ $# -eq 3 ]];
 then
@@ -100,21 +103,16 @@ export TOWER_HOST=https://tower.ftl-tower-test.na.shared.opentlc.com
 export TOWER_TOKEN=GcuQunIoPr7XGCvGy6lCCpFCygBPgw
 export TOWER_VERIFY_SSL=false
 
-# wip for testing
-PLAYBOOK=main.yml
-if [[ ${COURSE_ID} == "ocp4_advanced_application_deployment" ]];
-then
-  PLAYBOOK=solve_lab.yml
-fi
+export ANSIBLE_DISPLAY_SKIPPED_HOSTS=false
 
-( cd ${FTL_REPO_HOME};  ansible-playbook $PLAYBOOK        \
+( cd ${FTL_REPO_HOME};  ansible-playbook main.yml         \
   --vault-password-file=vars/.vault                       \
+  --tags=${ACTION}                                        \
   -e @vars/global_vars.yml                                \
   -e @courses/${COURSE_ID}/course_vars.yml                \
   -e purpose=${PURPOSE}                                   \
   -e course_id=${COURSE_ID}                               \
   -e lab_id=${LAB_ID}                                     \
-  --tags=${LAB_ID}                                        \
   -e student_id=${STUDENT_ID}    > ${LOG_FILE} 2>&1 )
 
 if [ $? -ne 0 ]
