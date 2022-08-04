@@ -1,5 +1,5 @@
 ---
 collections:
-  - name: git+https://github.com/juliaaano/redhat-gpe-collections.git#/ansible/redhat_gpe/
+  - name: git+https://github.com/redhat-gpte-devopsautomation/ftl-collections.git
     type: git
-    version: master
+    version: main
