@@ -125,7 +125,10 @@ fi
 
 if [ ${PURPOSE} == "grade_lab" ]
 then
-  cat ${GRADER_REPORT}
+  cat ${GRADER_REPORT} | sed  -e 's#PASS:#\x1B[32m&\x1B[0m#' \
+                              -e 's#FAIL:#\x1B[31m&\x1B[0m#' \
+                              -e 's#^FAILED.*#\x1B[31m&\x1B[0m#' \
+                              -e 's#^SUCCESS.*#\x1B[32m&\x1B[0m#'
 
   echo
   echo "Grading Report:        ${GRADER_REPORT}"
