@@ -31,7 +31,7 @@ pip_dependencies:
 
 ftl_git_repo: https://github.com/redhat-gpte-devopsautomation/FTL.git
 
-ftl_git_branch: ftl-virt-on-rosa
+ftl_git_branch: master
 
 # Local destination directory on grading host
 
